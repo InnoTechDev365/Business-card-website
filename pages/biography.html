@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+  // This is a CodeSandbox injection script that's used to
+  // add navigation and inspector functionality to the preview
+  (function () {
+    // 1) Get the <script> tag that's currently running:
+    var me = document.currentScript;
+
+    // 2) Create the blocking‐style <script> to load:
+    var script = document.createElement("script");
+    script.src = "https://codesandbox.io/p/preview-protocol.js";
+
+    // By default a dynamically‐inserted <script> is async=true.
+    // Turn async off to make it behave like a normal blocking <script>:
+    script.async = false;
+    // (Do NOT set defer.)
+
+    // 3) Insert it immediately after the current <script>:
+    me.parentNode.insertBefore(script, me);
+  })();
+
+  const isIFramePreview = window.top !== window.self;
+
+  // Only run this script in editor context
+  if (isIFramePreview) {
+    // This script is used to enable Chrome DevTools functionality
+    (function () {
+      var script = document.createElement("script");
+      script.src =
+        "https://codesandbox.io/p/chrome-devtool/protocol/index.js";
+
+      script.onload = () => {
+        const devtoolProtocol = window.chobitsu;
+        if (devtoolProtocol) {
+          window.addEventListener("message", (event) => {
+            const { type, data } = event.data;
+
+            if (type === "FROM_DEVTOOL") {
+              devtoolProtocol.sendRawMessage(data);
+            }
+          });
+
+          devtoolProtocol.setOnMessage((data) => {
+            if (data.includes('"id":"tmp')) {
+              return;
+            }
+
+            window.parent.postMessage({ type: "TO_DEVTOOL", data }, "*");
+          });
+
+          devtoolProtocol.sendRawMessage(
+            `{"id":5,"method":"Runtime.enable","params":{}}`
+          );
+        }        
+      }
+
+      (document.head || document.documentElement).prepend(script);
+    })();
+  }
+
+  if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined") {
+    let nextID = 0;
+    let hook = (__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+      renderers: new Map(),
+      supportsFiber: true,
+      inject: (renderer) => {
+        const id = nextID++;
+        hook.renderers.set(id, renderer);
+        return id;
+      },
+      onScheduleFiberRoot() {},
+      onCommitFiberRoot() {},
+      onCommitFiberUnmount() {},
+    });
+  }
+
+  document.currentScript.remove();
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biography - Elizabeth Thatchers</title>
+    <meta name="description" content="Learn about Elizabeth Thatchers, contemporary artist exploring the intersection of light, emotion, and human experience through multiple artistic mediums.">
+    <meta name="keywords" content="Elizabeth Thatchers, artist biography, contemporary artist, Pacific Northwest, art exhibitions">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <button class="nav-toggle" id="navToggle">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <div class="nav-menu">
+            <ul>
+                <li><a href="../" class="nav-link">Home</a></li>
+                <li><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="./biography.html" class="nav-link">Biography</a></li>
+                <li><a href="./contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-social">
+                <a href="https://instagram.com/elizabeththatchers" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://facebook.com/elizabeththatchers" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://x.com/elizabeththatchers" target="_blank" rel="noopener">X</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="container">
+                <h1>About Elizabeth</h1>
+                <p>Artist, photographer, and digital art pioneer exploring the delicate balance between light and shadow, emotion and form.</p>
+            </div>
+        </header>
+
+        <!-- Biography Section -->
+        <section class="biography-section">
+            <div class="container">
+                <div class="bio-content">
+                    <div class="bio-text">
+                        <h2>Artist Statement</h2>
+                        <p>Elizabeth Thatchers is a contemporary artist whose work explores the delicate balance between light and shadow, emotion and form. With over two decades of experience, her artistic journey spans multiple mediums including photography, digital art, and traditional painting techniques.</p>
+                        
+                        <p>Born and raised in the Pacific Northwest, Elizabeth's deep connection to nature profoundly influences her artistic vision. Her landscapes capture the ethereal beauty of misty coastlines and ancient forests, while her portrait work reveals the inner essence of her subjects.</p>
+                        
+                        <p>Her abstract compositions push the boundaries of traditional art, incorporating modern digital techniques with classical principles of composition and color theory. Elizabeth's work has been exhibited in galleries across the United States and internationally.</p>
+                        
+                        <p>Currently based in her studio overlooking the coast, Elizabeth continues to create works that invite viewers into contemplative spaces where art becomes a bridge between the external world and inner experience.</p>
+                        
+                        <h3 style="margin-top: 40px; margin-bottom: 20px;">Education & Background</h3>
+                        <p>Elizabeth holds a Master of Fine Arts from the Pacific Northwest College of Art, where she specialized in mixed media and contemporary photography. Her academic focus on the intersection of traditional and digital mediums continues to influence her work today.</p>
+                        
+                        <h3 style="margin-top: 40px; margin-bottom: 20px;">Artistic Philosophy</h3>
+                        <p>"Art is not just about creating beauty—it's about capturing moments of truth that resonate beyond the surface. Each piece I create is an invitation to pause, to feel, and to see the world through a different lens."</p>
+                        
+                        <h3 style="margin-top: 40px; margin-bottom: 20px;">Recent Exhibitions</h3>
+                        <ul style="margin-left: 20px; color: var(--gray-700);">
+                            <li style="margin-bottom: 10px;">2024 - "Luminous Spaces" - Contemporary Art Museum, Portland</li>
+                            <li style="margin-bottom: 10px;">2024 - "Inner Landscapes" - Gallery 42, San Francisco</li>
+                            <li style="margin-bottom: 10px;">2023 - "Digital Dreams" - New Media Art Center, Seattle</li>
+                            <li style="margin-bottom: 10px;">2023 - "Coastal Reflections" - Mendocino Art Center</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bio-image">
+                        <img src="../assets/images/elizabeththatchers.jpeg" alt="Elizabeth Thatchers in her studio" onerror="handleImageError(this)">
+                        <p style="text-align: center; margin-top: 15px; font-style: italic; color: var(--gray-600);">Elizabeth in her coastal studio, 2024</p>
+                    </div>
+                </div>
+                
+                <!-- Awards & Recognition Section -->
+                <div style="margin-top: 80px; padding: 60px 0; background-color: var(--gray-100);">
+                    <div style="text-align: center; margin-bottom: 50px;">
+                        <h2>Awards & Recognition</h2>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                        <div style="text-align: center; padding: 30px;">
+                            <h3 style="margin-bottom: 15px;">2024</h3>
+                            <p style="color: var(--gray-700);">Pacific Coast Artist of the Year<br>California Arts Council</p>
+                        </div>
+                        <div style="text-align: center; padding: 30px;">
+                            <h3 style="margin-bottom: 15px;">2023</h3>
+                            <p style="color: var(--gray-700);">Excellence in Mixed Media<br>International Contemporary Art Fair</p>
+                        </div>
+                        <div style="text-align: center; padding: 30px;">
+                            <h3 style="margin-bottom: 15px;">2022</h3>
+                            <p style="color: var(--gray-700);">Emerging Digital Artist Award<br>Digital Arts Society</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

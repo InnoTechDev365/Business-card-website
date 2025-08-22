@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+  // This is a CodeSandbox injection script that's used to
+  // add navigation and inspector functionality to the preview
+  (function () {
+    // 1) Get the <script> tag that's currently running:
+    var me = document.currentScript;
+
+    // 2) Create the blocking‐style <script> to load:
+    var script = document.createElement("script");
+    script.src = "https://codesandbox.io/p/preview-protocol.js";
+
+    // By default a dynamically‐inserted <script> is async=true.
+    // Turn async off to make it behave like a normal blocking <script>:
+    script.async = false;
+    // (Do NOT set defer.)
+
+    // 3) Insert it immediately after the current <script>:
+    me.parentNode.insertBefore(script, me);
+  })();
+
+  const isIFramePreview = window.top !== window.self;
+
+  // Only run this script in editor context
+  if (isIFramePreview) {
+    // This script is used to enable Chrome DevTools functionality
+    (function () {
+      var script = document.createElement("script");
+      script.src =
+        "https://codesandbox.io/p/chrome-devtool/protocol/index.js";
+
+      script.onload = () => {
+        const devtoolProtocol = window.chobitsu;
+        if (devtoolProtocol) {
+          window.addEventListener("message", (event) => {
+            const { type, data } = event.data;
+
+            if (type === "FROM_DEVTOOL") {
+              devtoolProtocol.sendRawMessage(data);
+            }
+          });
+
+          devtoolProtocol.setOnMessage((data) => {
+            if (data.includes('"id":"tmp')) {
+              return;
+            }
+
+            window.parent.postMessage({ type: "TO_DEVTOOL", data }, "*");
+          });
+
+          devtoolProtocol.sendRawMessage(
+            `{"id":5,"method":"Runtime.enable","params":{}}`
+          );
+        }        
+      }
+
+      (document.head || document.documentElement).prepend(script);
+    })();
+  }
+
+  if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined") {
+    let nextID = 0;
+    let hook = (__REACT_DEVTOOLS_GLOBAL_HOOK__ = {
+      renderers: new Map(),
+      supportsFiber: true,
+      inject: (renderer) => {
+        const id = nextID++;
+        hook.renderers.set(id, renderer);
+        return id;
+      },
+      onScheduleFiberRoot() {},
+      onCommitFiberRoot() {},
+      onCommitFiberUnmount() {},
+    });
+  }
+
+  document.currentScript.remove();
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Elizabeth Thatchers</title>
+    <meta name="description" content="Explore Elizabeth Thatchers' complete gallery of contemporary artworks including portraits, landscapes, and abstract compositions.">
+    <meta name="keywords" content="art gallery, portraits, landscapes, abstract art, contemporary art, Elizabeth Thatchers">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <button class="nav-toggle" id="navToggle">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <div class="nav-menu">
+            <ul>
+                <li><a href="../" class="nav-link">Home</a></li>
+                <li><a href="./gallery.html" class="nav-link">Gallery</a></li>
+                <li><a href="./biography.html" class="nav-link">Biography</a></li>
+                <li><a href="./contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-social">
+                <a href="https://instagram.com/elizabeththatchers" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://facebook.com/elizabeththatchers" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://x.com/elizabeththatchers" target="_blank" rel="noopener">X</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="container">
+                <h1>Gallery</h1>
+                <p>A curated collection of contemporary artworks exploring the boundaries between traditional and digital mediums.</p>
+            </div>
+        </header>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section">
+            <div class="container">
+                <div class="gallery-nav">
+                    <button class="active" data-category="all">All Works</button>
+                    <button data-category="portraits">Portraits</button>
+                    <button data-category="landscapes">Landscapes</button>
+                    <button data-category="abstractions">Abstractions</button>
+                </div>
+                
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Portraits -->
+                    <div class="gallery-item" data-category="portraits" onclick="openModal('../assets/images/elizabeththatchers.jpeg', 'The Artist at Work', '2024 - Portrait Photography')">
+                        <img src="../assets/images/elizabeththatchers.jpeg" alt="The Artist at Work" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>The Artist at Work</h3>
+                            <p>2024 - Portrait Photography</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="portraits" onclick="openModal('../assets/images/wisdomlines.jpeg', 'Wisdom Lines', '2024 - Portrait Study')">
+                        <img src="../assets/images/wisdomlines.jpeg" alt="Wisdom Lines" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Wisdom Lines</h3>
+                            <p>2024 - Portrait Study</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="portraits" onclick="openModal('../assets/images/pexels.jpeg', 'Quiet Moments', '2024 - Contemporary Portrait')">
+                        <img src="../assets/images/pexels.jpeg" alt="Quiet Moments" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Quiet Moments</h3>
+                            <p>2024 - Contemporary Portrait</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Landscapes -->
+                    <div class="gallery-item" data-category="landscapes" onclick="openModal('../assets/images/coastalmist.jpeg', 'Coastal Mist', '2024 - Landscape Photography')">
+                        <img src="../assets/images/coastalmist.jpeg" alt="Coastal Mist" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Coastal Mist</h3>
+                            <p>2024 - Landscape Photography</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="landscapes" onclick="openModal('../assets/images/forestdepths..jpeg', 'Forest Depths', '2024 - Nature Photography')">
+                        <img src="../assets/images/forestdepths..jpeg" alt="Forest Depths" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Forest Depths</h3>
+                            <p>2024 - Nature Photography</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="landscapes" onclick="openModal('../assets/images/desertdawn..jpeg', 'Desert Dawn', '2024 - Landscape')">
+                        <img src="../assets/images/desertdawn..jpeg" alt="Desert Dawn" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Desert Dawn</h3>
+                            <p>2024 - Landscape</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="landscapes" onclick="openModal('../assets/images/mountainsolitude..jpeg', 'Mountain Solitude', '2025 - Landscape')">
+                        <img src="../assets/images/mountainsolitude..jpeg" alt="Mountain Solitude" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Mountain Solitude</h3>
+                            <p>2025 - Landscape</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Abstractions -->
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/thedreamer.jpeg', 'The Dreamer', '2024 - Digital Abstract')">
+                        <img src="../assets/images/thedreamer.jpeg" alt="The Dreamer" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>The Dreamer</h3>
+                            <p>2024 - Digital Abstract</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/metamorphosis.jpeg', 'Metamorphosis', '2024 - Abstract Art')">
+                        <img src="../assets/images/metamorphosis.jpeg" alt="Metamorphosis" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Metamorphosis</h3>
+                            <p>2024 - Abstract Art</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/innerlight.jpeg', 'Inner Light', '2024 - Abstract Mixed Media')">
+                        <img src="../assets/images/innerlight.jpeg" alt="Inner Light" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Inner Light</h3>
+                            <p>2024 - Abstract Mixed Media</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/harmony..jpeg', 'Harmony', '2024 - Abstract Composition')">
+                        <img src="../assets/images/harmony..jpeg" alt="Harmony" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Harmony</h3>
+                            <p>2024 - Abstract Composition</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/innerstorm..jpeg', 'Inner Storm', '2024 - Abstract Expression')">
+                        <img src="../assets/images/innerstorm..jpeg" alt="Inner Storm" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Inner Storm</h3>
+                            <p>2024 - Abstract Expression</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/solitudestudy..jpeg', 'Solitude Study', '2024 - Abstract Painting')">
+                        <img src="../assets/images/solitudestudy..jpeg" alt="Solitude Study" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Solitude Study</h3>
+                            <p>2024 - Abstract Painting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" data-category="abstractions" onclick="openModal('../assets/images/akvarel-nye-kraski-fon-dla-festivala-holi.jpeg', 'Watercolor Dreams', '2025 - Abstract Watercolor')">
+                        <img src="../assets/images/akvarel-nye-kraski-fon-dla-festivala-holi.jpeg" alt="Watercolor Dreams" onerror="handleImageError(this)">
+                        <div class="gallery-info">
+                            <h3>Watercolor Dreams</h3>
+                            <p>2025 - Abstract Watercolor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for enlarged images -->
+    <div id="modal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
